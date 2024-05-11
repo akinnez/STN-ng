@@ -1,0 +1,111 @@
+<footer
+  class="lg:h-[560px] w-full"
+  style="background: linear-gradient(to bottom, #15803d, #ebeb0e)"
+>
+  <div class="flex items-center py-10 lg:py-0 w-full lg:h-[500px]">
+    <div
+      class="lg:h-[400px] w-full mx-3 lg:mx-10 xl:mx-20 flex lg:items-center flex-col-reverse lg:flex-row lg:gap-x-10"
+    >
+      <div class="mt-10 border-t-4 border-white lg:mt-0 lg:border-0 lg:w-3/12">
+        <div class="pt-5 lg:pt-0">
+          <h1 class="text-4xl font-bold italic">STN-Ng</h1>
+        </div>
+        <p class="font-bold mt-8">Contact Address</p>
+        <div class="flex mt-5 items-center gap-3">
+          <app-location-dot styles="h-6 w-6"></app-location-dot>
+          <p class="font-semibold tex-lg">Lagos, Nigeria</p>
+        </div>
+        <div class="flex items-center mt-3 gap-3">
+          <app-mail styles="h-6 w-6"></app-mail>
+          <p class="font-semibold tex-lg">reachus&#64;stnaija.com</p>
+        </div>
+        <div class="flex items-center mt-3 gap-3">
+          <app-phone styles="h-6 w-6"></app-phone>
+          <p class="font-semibold tex-lg">+17135976132, (+234)07008007000</p>
+        </div>
+        <p class="font-bold my-5">Social Network</p>
+        <div class="sm:flex sm:items-center sm:justify-between">
+          <div class="flex my-6 text-2xl space-x-5 lg:justify-center sm:mt-0">
+            <a [routerLink]="" class="cursor-pointer">
+              <app-facebook styles="h-6 w-6" />
+            </a>
+            <a [routerLink]="" class="cursor-pointer">
+              <app-instagram styles="h-6 w-6" />
+            </a>
+            <a [routerLink]="" class="cursor-pointer">
+              <app-twitter styles="h-6 w-6" />
+            </a>
+            <a [routerLink]="" class="cursor-pointer">
+              <app-youtube styles="h-6 w-6" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="lg:grid lg:grid-cols-5 w-full">
+        <div>
+          <h1 class="font-bold text-xl mb-3">Get to know us</h1>
+          <ul>
+            @for(abt of footerdocs.about; track abt){
+            <a [routerLink]="abt.link">
+              <li class="my-3 hover:underline hover:text-white/80">
+                {{ abt.label }}
+              </li>
+            </a>
+            }
+          </ul>
+        </div>
+        <div>
+          <h1 class="font-bold text-xl">Programs</h1>
+          <ul>
+            @for(service of footerdocs.services; track service){
+            <a [routerLink]="service.link">
+              <li class="my-3 hover:underline hover:text-white/80">
+                {{ service.label }}
+              </li>
+            </a>
+            }
+          </ul>
+        </div>
+        <div>
+          <h1 class="font-bold text-xl">DOCS</h1>
+          <ul>
+            @for(doc of footerdocs.docs; track doc){
+            <a [routerLink]="doc.link">
+              <li class="my-3 hover:underline hover:text-white/80">
+                {{ doc.label }}
+              </li>
+            </a>
+            }
+          </ul>
+        </div>
+        <div>
+          <h1 class="font-bold text-xl">Links</h1>
+          <ul>
+            @for(link of footerdocs.links; track link){
+            <a [routerLink]="link.link">
+              <li class="my-3 hover:underline hover:text-white/80">
+                {{ link.label }}
+              </li>
+            </a>
+            }
+          </ul>
+        </div>
+        <div>
+          <h1 class="font-bold text-xl">APPs</h1>
+          <ul>
+            @for(app of footerdocs.apps; track app){
+            <a [routerLink]="app.link">
+              <li class="my-3 hover:underline hover:text-white/80">
+                {{ app.label }}
+              </li>
+            </a>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-4 font-semibold text-lg text-center">
+    Copyright {{ getYear }} STNaija Shipping Company. All Rights Reserved.
+  </div>
+</footer>

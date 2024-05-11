@@ -1,0 +1,46 @@
+<main class="py-5">
+  <div>
+    <h2 class="font-bold text-2xl md:text-4xl text-center">Welcome</h2>
+    <div class="text-center">
+      <span class="text-lg"
+        >Create an account to get started with STNaija.</span
+      >
+    </div>
+  </div>
+  <div class="sm:3/4 md:w-2/5 lg:1/3 mx-auto">
+    <app-card styles="">
+      <div class="my-6 px-10">
+        <form [formGroup]="registerForm" (submit)="submitForm()">
+          @for(join of signupData; track join){
+          <div class="mb-3">
+            <label
+              class="block font-semibold text-[#117211]"
+              for="{{ join.formcontrol }}"
+              >{{ join.label }}</label
+            >
+            <input
+              class="block border-2 border-[#117211] rounded-xl outline-none py-[15px] px-[10px] bg-transparent w-full box-border focus:bg-transparent"
+              type="{{ join.type }}"
+              required
+              formControlName="{{ join.formcontrol }}"
+            />
+            @if(join.errorNotice){
+            <small><i class="text-red-600">min. of 6 characters</i></small>
+            }
+          </div>
+          }
+
+          <div class="my-5">
+            <app-button styles="w-full"> Create an account </app-button>
+          </div>
+          <div class="text-end">
+            <span>Already have an account?... </span
+            ><a class="text-[#117211] cursor-pointer" routerLink="/auth/login"
+              >Log In</a
+            >
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</main>

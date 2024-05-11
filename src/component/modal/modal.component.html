@@ -1,0 +1,23 @@
+<div
+  *ngIf="open"
+  class="fixed z-50 top-0 right-0 left-0 bottom-0 bg-[#1c1c1c80] overflow-hidden w-full"
+  (click)="onClose()"
+>
+  <div class="w-full h-screen flex justify-center items-center">
+    <app-card
+      [isShare]="false"
+      styles="w-3/4 md:w-1/2 bg-white mx-auto {{ cardStyle }}"
+    >
+      <div class="py-2 px-5 flex justify-end">
+        <app-button
+          icon="close"
+          [style]="'px-1 py-1'"
+          (event)="onClose()"
+        ></app-button>
+      </div>
+      <div class="p-5 w-full">
+        <ng-content></ng-content>
+      </div>
+    </app-card>
+  </div>
+</div>

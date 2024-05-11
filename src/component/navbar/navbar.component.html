@@ -1,0 +1,67 @@
+<header
+  class="relative w-full flex justify-between items-center py-4 px-6 lg:px-10 bg-transparent text-black shadow-lg shadow-black/10"
+>
+  <div class="lg:hidden">
+    <app-button styles="border-none py-0 px-0" (event)="open()"
+      >open</app-button
+    >
+  </div>
+  <a
+    [routerLink]="token ? '/' + username : '/'"
+    class="navbar-brand text-3xl cursor-pointer font-medium tracking-widest"
+    >STNaija</a
+  >
+  <nav
+    class="fixed lg:static top-0 z-10 flex flex-col min-w-[300px]  h-screen lg:h-full justify-start  lg:flex-row lg:justify-center items-center transition-all duration-500 ease-linear {{
+      isOpen ? 'left-0 bg-[#073d07] py-40 lg:py-0' : '-left-[100%] lg:left-0'
+    }}"
+  >
+    <app-button
+      styles="absolute top-4 right-0 mx-5 lg:hidden"
+      (event)="close()"
+    >
+      clear
+    </app-button>
+    <a
+      [routerLink]="token ? '/user/home' : '/'"
+      class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
+      >Home</a
+    >
+
+    <a
+      class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
+      [routerLink]="token ? '/' + username + '/myPosts' : '/tags'"
+      >{{ token ? "Posts" : "Customer Story" }}</a
+    >
+    <a
+      class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
+      [routerLink]="token ? '/' + username + '/myContact' : '/contacts'"
+      >Contact</a
+    >
+    <a
+      class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
+      [routerLink]="token ? '/' + username + '/myPosts' : '/about'"
+      >About</a
+    >
+  </nav>
+
+  <div class="flex md:gap-x-3">
+    @if(!token){
+    <a routerLink="/auth/join">
+      <app-button styles="font-semibold"> Join Now </app-button></a
+    >
+    }
+
+    <div class="flex items-center">
+      @if(token){
+      <span class="flex items-center gap-1 cursor-pointer">
+        <span class="hidden md:block">{{ username }}</span>
+      </span>
+      } @else{
+      <a routerLink="/auth/login">
+        <app-button styles="font-semibold hidden md:block">Login</app-button>
+      </a>
+      }
+    </div>
+  </div>
+</header>
