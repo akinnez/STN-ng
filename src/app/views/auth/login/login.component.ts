@@ -8,6 +8,7 @@ import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';
 import isNullOrUndefined from '@/utils/isNullOrUndefied';
 import { ToastService } from '@/component/services/toast/toast.service';
+// import createToast from '@/utils/toastFunction';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { ToastService } from '@/component/services/toast/toast.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  loading: boolean = false;
   title: string = 'Log In';
   @ViewChild('container', { read: ViewContainerRef, static: true })
   container!: ViewContainerRef;
@@ -58,7 +60,8 @@ export class LoginComponent {
     this.meta.updateMeta(this.title, this.data);
   }
 
-  async submitForm() {
+  submitForm() {
+    this.loading = true;
     // CHECKING VALIDITY OF THE FORM
     if (!this.loginForm.valid) {
       return this.toast.show('Invalid Form');
@@ -67,24 +70,35 @@ export class LoginComponent {
     this.user = JSON.parse(
       localStorage.getItem(`${this.loginForm.value.username}`) as string
     );
-    let res: any = this.loginCred(this.user, this.loginForm.value);
-    this.toast.show(res?.message);
 
+    let res: any = this.loginCred(this.user, this.loginForm.value);
+
+    if (res.status == 200) {
+      //manually setting token
+      sessionStorage.setItem('token', JSON.stringify(true));
+      this.toast.show(res?.message);
+      this.router.navigateByUrl(`/${this.user.username}`);
+      this.loading = false;
+    } else {
+      this.toast.show(res?.message);
+      this.loading = false;
+    }
+
+    import('@/utils/toastFunction').then((_) =>
+      _.default(this.container, this.toast)
+    );
     //Creating a toast
-    const { ToastComponent } = await import('@/utils/toast.component');
-    let toastParams = this.container.createComponent(ToastComponent);
-    toastParams.instance.toasts = this.toast.toasts;
-    toastParams.instance.container = this.container;
+    // createToast();
   }
 
   loginCred(user: any, form: any) {
-    if (isNullOrUndefined(user)) {
-      return { message: 'User Not Found ', status: 404 };
+    if (isNullOrUndefined(user) || user.password != form.password) {
+      return { message: 'Incorrect Username or Password ', status: 401 };
     }
-
     return (
-      user.username == form.value.username &&
-      user.password == form.value.password && {
+      user &&
+      user.username == form.username &&
+      user.password == form.password && {
         message: 'User Logged In Successfully',
         status: 200,
       }
