@@ -2,7 +2,7 @@ import { MetaService } from '@/component/services/meta/meta.service';
 import { Component, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { form, formtype } from '../../../../utils/form';
+import { form, formtype } from '@/utils/form';
 import { Signup } from '@/component/types/signup.interface';
 import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';

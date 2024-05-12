@@ -1,30 +1,26 @@
 import { MetaService } from '@/component/services/meta/meta.service';
 import { Login } from '@/component/types/login.interface';
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { form, formtype } from '../../../../utils/form';
+import { form, formtype } from '@/utils/form';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';
-import isNullOrUndefined from '../../../../utils/isNullOrUndefied';
-import { ToastComponent } from '../../../../utils/toast.component';
+import isNullOrUndefined from '@/utils/isNullOrUndefied';
 import { ToastService } from '@/component/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    ButtonComponent,
-    CardComponent,
-    ReactiveFormsModule,
-    RouterModule,
-    ToastComponent,
-  ],
+  imports: [ButtonComponent, CardComponent, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   title: string = 'Log In';
+  @ViewChild('container', { read: ViewContainerRef, static: true })
+  container!: ViewContainerRef;
+
   user: any;
   loginData = [
     { label: 'Username', formcontrol: 'username', type: 'text' },
@@ -62,10 +58,10 @@ export class LoginComponent {
     this.meta.updateMeta(this.title, this.data);
   }
 
-  submitForm() {
+  async submitForm() {
     // CHECKING VALIDITY OF THE FORM
     if (!this.loginForm.valid) {
-      return '';
+      return this.toast.show('Invalid Form');
     }
 
     this.user = JSON.parse(
@@ -73,14 +69,17 @@ export class LoginComponent {
     );
     let res: any = this.loginCred(this.user, this.loginForm.value);
     this.toast.show(res?.message);
-    console.log(res);
 
-    return '';
+    //Creating a toast
+    const { ToastComponent } = await import('@/utils/toast.component');
+    let toastParams = this.container.createComponent(ToastComponent);
+    toastParams.instance.toasts = this.toast.toasts;
+    toastParams.instance.container = this.container;
   }
 
   loginCred(user: any, form: any) {
     if (isNullOrUndefined(user)) {
-      return { message: 'User Not Found', status: 404 };
+      return { message: 'User Not Found ', status: 404 };
     }
 
     return (
