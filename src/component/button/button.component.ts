@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
       (click)="clickButton($event)"
       class="{{
         styles
-      }} border-2 border-[#15803d] text-[#15803d] rounded-lg px-4 py-3 hover:bg-[#15803d] hover:text-[#ebeb0e80]"
+      }} border-2 border-[#15803d] font-semibold text-[#15803d] rounded-lg px-4 py-3 hover:bg-[#15803d] hover:text-[#ebeb0e80]"
     >
       <ng-content></ng-content>
     </button>

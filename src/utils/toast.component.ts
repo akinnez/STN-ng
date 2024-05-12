@@ -24,7 +24,7 @@ import {
 })
 export class ToastComponent implements OnInit {
   @Input() toasts!: any[];
-  @Input() duration?: number = 1000;
+  @Input() duration?: number = 3000;
   @Input() container!: ViewContainerRef;
   public toastService = inject(ToastService);
 

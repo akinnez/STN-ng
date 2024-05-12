@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MetaService } from '@/component/services/meta/meta.service';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-landing',

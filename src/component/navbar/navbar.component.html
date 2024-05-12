@@ -48,7 +48,7 @@
   <div class="flex md:gap-x-3">
     @if(!token){
     <a routerLink="/auth/join">
-      <app-button styles="font-semibold"> Join Now </app-button></a
+      <app-button styles=""> Join Now </app-button></a
     >
     }
 
@@ -59,7 +59,7 @@
       </span>
       } @else{
       <a routerLink="/auth/login">
-        <app-button styles="font-semibold hidden md:block">Login</app-button>
+        <app-button styles="hidden md:block">Login</app-button>
       </a>
       }
     </div>
