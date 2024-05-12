@@ -6,16 +6,26 @@ import { form, formtype } from '../../../../utils/form';
 import { Router, RouterModule } from '@angular/router';
 import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';
+import isNullOrUndefined from '../../../../utils/isNullOrUndefied';
+import { ToastComponent } from '../../../../utils/toast.component';
+import { ToastService } from '@/component/services/toast/toast.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ButtonComponent, CardComponent, ReactiveFormsModule, RouterModule],
+  imports: [
+    ButtonComponent,
+    CardComponent,
+    ReactiveFormsModule,
+    RouterModule,
+    ToastComponent,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
   title: string = 'Log In';
+  user: any;
   loginData = [
     { label: 'Username', formcontrol: 'username', type: 'text' },
     {
@@ -44,7 +54,8 @@ export class LoginComponent {
     },
   ];
   public meta = inject(MetaService);
-  public registerForm = new FormGroup<Login>(form(this.log));
+  public toast = inject(ToastService);
+  public loginForm = new FormGroup<Login>(form(this.log));
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -53,16 +64,31 @@ export class LoginComponent {
 
   submitForm() {
     // CHECKING VALIDITY OF THE FORM
-    if (!this.registerForm.valid) {
+    if (!this.loginForm.valid) {
       return '';
     }
-    const form: any = this.registerForm.value;
 
-    const credentials = {
-      username: form.username,
-      password: form.password,
-    };
+    this.user = JSON.parse(
+      localStorage.getItem(`${this.loginForm.value.username}`) as string
+    );
+    let res: any = this.loginCred(this.user, this.loginForm.value);
+    this.toast.show(res?.message);
+    console.log(res);
 
     return '';
+  }
+
+  loginCred(user: any, form: any) {
+    if (isNullOrUndefined(user)) {
+      return { message: 'User Not Found', status: 404 };
+    }
+
+    return (
+      user.username == form.value.username &&
+      user.password == form.value.password && {
+        message: 'User Logged In Successfully',
+        status: 200,
+      }
+    );
   }
 }

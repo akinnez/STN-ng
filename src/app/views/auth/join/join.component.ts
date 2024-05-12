@@ -69,16 +69,13 @@ export class JoinComponent {
     if (!this.registerForm.valid) {
       return '';
     }
-    const form: any = this.registerForm.value;
-
-    const credentials = {
-      email: form.email,
-      firstName: form.firstName,
-      lastName: form.lastName,
-      username: form.username,
-      password: form.password,
-    };
-
+    if (localStorage.getItem(`${this.registerForm.value.username}`)) {
+      return 'user exist';
+    }
+    localStorage.setItem(
+      `${this.registerForm.value.username}`,
+      JSON.stringify(this.registerForm.value)
+    );
     return '';
   }
 }
