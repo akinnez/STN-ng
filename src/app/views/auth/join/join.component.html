@@ -1,3 +1,4 @@
+<ng-container #container />
 <main class="py-5">
   <div>
     <h2 class="font-bold text-2xl md:text-4xl text-center text-[#117211]">
@@ -46,3 +47,6 @@
     </app-card>
   </div>
 </main>
+<app-modal [open]="open" (onClickClose)="onClose()">
+  <ng-container #modal />
+</app-modal>

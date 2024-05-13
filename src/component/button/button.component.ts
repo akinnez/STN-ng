@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
   template: `
     <button
       (click)="clickButton($event)"
-      class="{{
+      class="border-2 border-[#15803d] font-semibold text-[#15803d] rounded-lg px-4 py-3 hover:bg-[#15803d] hover:text-[#ebeb0e80] {{
         styles
-      }} border-2 border-[#15803d] font-semibold text-[#15803d] rounded-lg px-4 py-3 hover:bg-[#15803d] hover:text-[#ebeb0e80]"
+      }} "
     >
       <ng-content></ng-content>
     </button>

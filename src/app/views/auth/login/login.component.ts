@@ -8,6 +8,7 @@ import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';
 import isNullOrUndefined from '@/utils/isNullOrUndefied';
 import { ToastService } from '@/component/services/toast/toast.service';
+import { AuthService } from '@/component/services/auth/auth.service';
 // import createToast from '@/utils/toastFunction';
 
 @Component({
@@ -52,6 +53,7 @@ export class LoginComponent {
     },
   ];
   public meta = inject(MetaService);
+  public auth = inject(AuthService);
   public toast = inject(ToastService);
   public loginForm = new FormGroup<Login>(form(this.log));
   private router = inject(Router);
@@ -60,35 +62,37 @@ export class LoginComponent {
     this.meta.updateMeta(this.title, this.data);
   }
 
-  submitForm() {
+  async submitForm() {
     this.loading = true;
+
+    await import('@/utils/toastFunction').then((_) =>
+      _.default(this.container, this.toast)
+    );
+
     // CHECKING VALIDITY OF THE FORM
     if (!this.loginForm.valid) {
       return this.toast.show('Invalid Form');
     }
-
     this.user = JSON.parse(
       localStorage.getItem(`${this.loginForm.value.username}`) as string
     );
-
     let res: any = this.loginCred(this.user, this.loginForm.value);
 
     if (res.status == 200) {
       //manually setting token
-      sessionStorage.setItem('token', JSON.stringify(true));
-      this.toast.show(res?.message);
-      this.router.navigateByUrl(`/${this.user.username}`);
+      sessionStorage.setItem(
+        'token',
+        JSON.stringify({ isTokenSet: true, username: this.user.username })
+      );
+      this.toast.show(res.message);
+
+      location.href = `/user/dashboard`;
+
       this.loading = false;
     } else {
-      this.toast.show(res?.message);
+      this.toast.show(res.message);
       this.loading = false;
     }
-
-    import('@/utils/toastFunction').then((_) =>
-      _.default(this.container, this.toast)
-    );
-    //Creating a toast
-    // createToast();
   }
 
   loginCred(user: any, form: any) {

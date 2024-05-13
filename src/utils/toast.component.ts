@@ -15,7 +15,7 @@ import {
   template: `
     @for(toast of toasts; track toast){
     <div
-      class="text-black/80 bg-slate-50 p-3 m-3 rounded-md md:w-1/3 lg:w-1/4 absolute z-50 right-0"
+      class="text-black/80 bg-slate-400 shadow-md p-3 m-3 rounded-md md:w-1/3 lg:w-1/4 absolute z-50 right-0"
     >
       <span class="inline-block font-semibold">{{ toast.message }}</span>
     </div>

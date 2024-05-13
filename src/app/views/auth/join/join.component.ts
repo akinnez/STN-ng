@@ -1,20 +1,34 @@
 import { MetaService } from '@/component/services/meta/meta.service';
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { form, formtype } from '@/utils/form';
 import { Signup } from '@/component/types/signup.interface';
 import { ButtonComponent } from '@/component/button/button.component';
 import { CardComponent } from '@/component/card/card.component';
+import { ToastService } from '@/component/services/toast/toast.service';
+import isNullOrUndefined from '@/utils/isNullOrUndefied';
+import { ModalComponent } from '@/component/modal/modal.component';
 
 @Component({
   selector: 'app-join',
   standalone: true,
-  imports: [ButtonComponent, CardComponent, ReactiveFormsModule, RouterModule],
+  imports: [
+    ButtonComponent,
+    CardComponent,
+    ReactiveFormsModule,
+    RouterModule,
+    ModalComponent,
+  ],
   templateUrl: './join.component.html',
   styleUrl: './join.component.scss',
 })
 export class JoinComponent {
+  @ViewChild('container', { read: ViewContainerRef, static: true })
+  container!: ViewContainerRef;
+  @ViewChild('modal', { read: ViewContainerRef, static: true })
+  modal!: ViewContainerRef;
+  open: boolean = false;
   title: string = 'Join us';
   signupData = [
     { label: 'First Name', formcontrol: 'firstName', type: 'text' },
@@ -39,6 +53,7 @@ export class JoinComponent {
     },
   ];
   public meta = inject(MetaService);
+  public toast = inject(ToastService);
 
   ngOnInit(): void {
     this.meta.updateMeta(this.title, this.data);
@@ -63,19 +78,48 @@ export class JoinComponent {
   private router = inject(Router);
 
   constructor() {}
-
-  submitForm() {
+  onClose() {
+    this.open = false;
+  }
+  async submitForm() {
     // CHECKING VALIDITY OF THE FORM
     if (!this.registerForm.valid) {
-      return '';
+      this.showToast();
+      return this.toast.show('Invalid Form');
     }
-    if (localStorage.getItem(`${this.registerForm.value.username}`)) {
-      return 'user exist';
+    let res = this.signUpCred(
+      localStorage.getItem(`${this.registerForm.value.username}`)
+    );
+    if (res.status == 401) {
+      this.showToast();
+      return this.toast.show(res.message);
     }
+    const { JoinSuccessComponent } = await import(
+      '@/utils/JoinSuccess.component'
+    );
+    this.modal.clear();
+    this.modal.createComponent(JoinSuccessComponent);
+
     localStorage.setItem(
       `${this.registerForm.value.username}`,
       JSON.stringify(this.registerForm.value)
     );
-    return '';
+    return (this.open = true);
+  }
+
+  signUpCred(user: any) {
+    if (!isNullOrUndefined(user)) {
+      return { message: 'User Already Exist', status: 401 };
+    }
+    return {
+      message: 'User Created Successfully',
+      status: 201,
+    };
+  }
+  showToast() {
+    this.container.clear();
+    import('@/utils/toastFunction').then((_) =>
+      _.default(this.container, this.toast)
+    );
   }
 }

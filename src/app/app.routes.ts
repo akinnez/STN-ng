@@ -15,4 +15,11 @@ export const routes: Routes = [
         (_) => _.AuthComponentsRoutingModule
       ),
   },
+  {
+    path: 'user',
+    loadChildren: () =>
+      import('@/views/user/user-routing.module').then(
+        (_) => _.UserRoutingModule
+      ),
+  },
 ];

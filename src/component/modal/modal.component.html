@@ -4,16 +4,11 @@
   (click)="onClose()"
 >
   <div class="w-full h-screen flex justify-center items-center">
-    <app-card
-      [isShare]="false"
-      styles="w-3/4 md:w-1/2 bg-white mx-auto {{ cardStyle }}"
-    >
+    <app-card styles="w-full bg-white mx-auto {{ cardStyle }}">
       <div class="py-2 px-5 flex justify-end">
-        <app-button
-          icon="close"
-          [style]="'px-1 py-1'"
-          (event)="onClose()"
-        ></app-button>
+        <app-button styles="px-[4px] py-[4px]" (event)="onClose()">
+          <app-close styles="h-6 w-6" />
+        </app-button>
       </div>
       <div class="p-5 w-full">
         <ng-content></ng-content>

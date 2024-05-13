@@ -2,12 +2,12 @@
   class="relative w-full flex justify-between items-center py-4 px-6 lg:px-10 bg-transparent text-black shadow-lg shadow-black/10"
 >
   <div class="lg:hidden">
-    <app-button styles="border-none py-0 px-0" (event)="open()"
-      >open</app-button
-    >
+    <app-button styles="border-none px-[0px] py-[0px]" (event)="open()">
+      <app-menu styles="h-6 w-6" />
+    </app-button>
   </div>
   <a
-    [routerLink]="token ? '/' + username : '/'"
+    [routerLink]="token ? '/user/dashboard' : '/'"
     class="navbar-brand text-3xl cursor-pointer font-medium tracking-widest"
     >STNaija</a
   >
@@ -20,28 +20,28 @@
       styles="absolute top-4 right-0 mx-5 lg:hidden"
       (event)="close()"
     >
-      clear
+      <app-close styles="h-6 w-6" />
     </app-button>
     <a
-      [routerLink]="token ? '/user/home' : '/'"
+      routerLink="/"
       class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
-      >Home</a
+      >{{ !token ? "Home" : "" }}</a
     >
 
     <a
       class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
-      [routerLink]="token ? '/' + username + '/myPosts' : '/tags'"
-      >{{ token ? "Posts" : "Customer Story" }}</a
+      [routerLink]="token ? '/user/label' : '/customer-story'"
+      >{{ token ? "Shipping Label" : "Customer Story" }}</a
     >
     <a
       class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
-      [routerLink]="token ? '/' + username + '/myContact' : '/contacts'"
-      >Contact</a
+      [routerLink]="token ? '/user/courier/detection' : '/contacts'"
+      >{{ token ? "Courier Detection" : "Contact" }}</a
     >
     <a
       class="text-[#ebeb0e] lg:text-[#117211] hover:lg:text-[#073d07] w-full lg:w-auto text-lg my-2 xl:mx-4 font-medium py-4 lg:py-0 px-6 rounded-md lg:mx-1 lg:text-xl hover:cursor-pointer"
-      [routerLink]="token ? '/' + username + '/myPosts' : '/about'"
-      >About</a
+      [routerLink]="token ? '/user/tracking' : '/about'"
+      >{{ token ? "Tracking" : "About " }}</a
     >
   </nav>
 
@@ -54,9 +54,7 @@
 
     <div class="flex items-center">
       @if(token){
-      <span class="flex items-center gap-1 cursor-pointer">
-        <span class="hidden md:block">{{ username }}</span>
-      </span>
+      <app-button (event)="logOut()">Log Out</app-button>
       } @else{
       <a routerLink="/auth/login">
         <app-button styles="hidden md:block">Login</app-button>
