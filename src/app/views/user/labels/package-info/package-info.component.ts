@@ -65,7 +65,7 @@ export class PackageInfoComponent {
       length: parseFloat(this.createForm.value.length),
       reference: this.createForm.value.length,
     };
-    localStorage.setItem('package', JSON.stringify(payload));
+    sessionStorage.setItem('package', JSON.stringify(payload));
     this.router.navigateByUrl('/user/label/create/invoice-info');
   }
 }

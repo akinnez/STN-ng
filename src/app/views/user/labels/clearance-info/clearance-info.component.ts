@@ -27,10 +27,7 @@ export class ClearanceInfoComponent {
     if (!this.createForm.valid) {
       return;
     }
-    localStorage.setItem(
-      'clearance_info',
-      JSON.stringify(this.createForm.value)
-    );
+    sessionStorage.setItem('clearance', JSON.stringify(this.createForm.value));
     this.router.navigateByUrl('/user/label/preview');
   }
 }

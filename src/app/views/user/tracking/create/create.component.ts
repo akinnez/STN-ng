@@ -3,11 +3,11 @@ import { CardComponent } from '@/component/card/card.component';
 import { ShipmentService } from '@/component/services/shipment/shipment.service';
 import { ToastService } from '@/component/services/toast/toast.service';
 import { form, formtype } from '@/utils/form';
-import { HttpClientModule } from '@angular/common/http';
 import { Component, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from '../../../../../environments/environment';
+import { SpinnerComponent } from '@/component/Icons/Spinner';
 
 @Component({
   selector: 'app-create',
@@ -17,7 +17,7 @@ import { environment } from '../../../../../environments/environment';
     ButtonComponent,
     ReactiveFormsModule,
     RouterModule,
-    HttpClientModule,
+    SpinnerComponent,
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
@@ -27,6 +27,7 @@ export class CreateComponent {
   container!: ViewContainerRef;
 
   title = 'Create Tracking';
+  loading = false;
   private router = inject(Router);
   private toast = inject(ToastService);
   private shipment = inject(ShipmentService);
@@ -63,6 +64,7 @@ export class CreateComponent {
     };
 
     try {
+      this.loading = true;
       this.showToast();
       let sub = this.shipment.createTracking(payload).subscribe({
         next: (res) => {
@@ -72,12 +74,16 @@ export class CreateComponent {
               JSON.stringify(this.createForm.value)
             );
             this.toast.show('Tracking Created Successfully');
+            this.loading = false;
             this.router.navigateByUrl('/user/tracking');
           }
+
           this.toast.show('Oops, an error was encountered');
+          this.loading = false;
         },
         error: (err) => {
           this.toast.show(err.message);
+          this.loading = false;
         },
         complete: () => {
           sub.unsubscribe();
@@ -85,6 +91,7 @@ export class CreateComponent {
       });
     } catch (error: any) {
       this.toast.show(error?.err?.message);
+      this.loading = false;
     }
   }
   showToast() {

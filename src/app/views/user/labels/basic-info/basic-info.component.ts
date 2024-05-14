@@ -164,7 +164,7 @@ export class BasicInfoComponent {
         poster_code: this.createForm.value.sender_poster_code,
       },
     };
-    localStorage.setItem('basic', JSON.stringify(payload));
+    sessionStorage.setItem('basic', JSON.stringify(payload));
     this.router.navigateByUrl('/user/label/create/package-info');
   }
 }

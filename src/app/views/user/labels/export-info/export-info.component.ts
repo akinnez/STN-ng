@@ -57,7 +57,7 @@ export class ExportInfoComponent {
       quantity: parseInt(this.createForm.value.quantity),
     };
 
-    localStorage.setItem('export', JSON.stringify(payload));
+    sessionStorage.setItem('export', JSON.stringify(payload));
     this.router.navigateByUrl('/user/label/create/clear-info');
   }
 }

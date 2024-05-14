@@ -21,4 +21,10 @@ export class ShipmentService {
   createTracking(value: any): Observable<any> {
     return this.http.post<any>(this.baseUrl + 'tracking/create', value);
   }
+  createLabel(value: any): Observable<any> {
+    return this.http.post<any>(
+      'https://app.kd100.com/sendAssistant/order/apiCall',
+      value
+    );
+  }
 }

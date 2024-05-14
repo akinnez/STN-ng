@@ -65,7 +65,7 @@ export class InvoiceInfoComponent {
       signature: '',
     };
 
-    localStorage.setItem('invoice', JSON.stringify(payload));
+    sessionStorage.setItem('invoice', JSON.stringify(payload));
     this.router.navigateByUrl('/user/label/create/export-info');
   }
 }

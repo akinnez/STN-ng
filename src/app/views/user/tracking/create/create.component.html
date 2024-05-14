@@ -29,7 +29,13 @@
             }
           </div>
           <div class="mt-10 mb-5">
-            <app-button styles="w-full"> Create tracking </app-button>
+            <app-button styles="w-full">
+              <div class="flex gap-x-3 justify-center">
+                <span>Create tracking</span> @if(loading){
+                <app-spinner styles="h-6 w-6" />
+                }
+              </div>
+            </app-button>
           </div>
         </form>
       </div>
