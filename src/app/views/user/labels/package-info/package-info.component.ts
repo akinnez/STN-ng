@@ -13,16 +13,38 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class PackageInfoComponent {
   private router = inject(Router);
+  payload: Array<object | any> = [];
   createData = [
-    { label: 'Height (in cm)', formcontrol: 'height', type: 'number' },
-    { label: 'Width (in cm)', formcontrol: 'width', type: 'number' },
-    { label: 'Weight (in cm)', formcontrol: 'weight', type: 'number' },
+    {
+      label: 'Height (in cm)',
+      formcontrol: 'height',
+      type: 'number',
+      required: true,
+    },
+    {
+      label: 'Width (in cm)',
+      formcontrol: 'width',
+      type: 'number',
+      required: true,
+    },
+    {
+      label: 'Weight (in kg)',
+      formcontrol: 'weight',
+      type: 'number',
+      required: true,
+    },
     {
       label: 'Length (in cm)',
       formcontrol: 'length',
       type: 'number',
+      required: true,
     },
-    { label: 'Reference', formcontrol: 'reference', type: 'text' },
+    {
+      label: 'Reference',
+      formcontrol: 'reference',
+      type: 'text',
+      required: false,
+    },
   ];
 
   log: Array<formtype> = [
@@ -54,18 +76,38 @@ export class PackageInfoComponent {
 
   public createForm = new FormGroup<any>(form(this.log));
 
+  addNew() {
+    if (!this.createForm.valid) {
+      return;
+    }
+    this.createPayload();
+    this.createForm.patchValue({
+      height: '',
+      width: '',
+      weight: '',
+      length: '',
+      reference: '',
+    });
+  }
   submitForm() {
     if (!this.createForm.valid) {
       return;
     }
-    const payload = {
-      height: parseFloat(this.createForm.value.height),
-      weight: parseFloat(this.createForm.value.weight),
-      width: parseFloat(this.createForm.value.width),
-      length: parseFloat(this.createForm.value.length),
-      reference: this.createForm.value.length,
-    };
-    sessionStorage.setItem('package', JSON.stringify(payload));
+    this.createPayload();
+    sessionStorage.setItem('package', JSON.stringify(this.payload));
     this.router.navigateByUrl('/user/label/create/invoice-info');
+  }
+
+  createPayload() {
+    const value = {
+      height: parseFloat(this.createForm.value.height).toFixed(2),
+      weight: parseFloat(this.createForm.value.weight).toFixed(2),
+      width: parseFloat(this.createForm.value.width).toFixed(2),
+      length: parseFloat(this.createForm.value.length).toFixed(2),
+      reference: this.createForm.value.reference,
+    };
+    this.payload.push(value);
+
+    //add toast here
   }
 }

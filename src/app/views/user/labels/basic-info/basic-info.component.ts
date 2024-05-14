@@ -147,6 +147,7 @@ export class BasicInfoComponent {
     const payload = {
       account_id: this.createForm.value.account_id,
       carrier_id: this.createForm.value.carrier_id,
+
       ship_to: {
         name: this.createForm.value.name,
         phone: this.createForm.value.phone,

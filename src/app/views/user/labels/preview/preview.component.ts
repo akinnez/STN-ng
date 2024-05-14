@@ -29,7 +29,12 @@ export class PreviewComponent implements OnInit {
   }
 
   submitForm() {
-    const payload = {};
+    const payload = {
+      ...this.basic,
+      invoiceinfo: this.invoice,
+      customs_items: this.clearance,
+      packages: this.package,
+    };
     let shipment = this.shipmentService.createLabel(payload).subscribe({
       next: (res) => {},
       error: (err) => {},
