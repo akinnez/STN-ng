@@ -117,7 +117,6 @@ export class JoinComponent {
     };
   }
   showToast() {
-    this.container.clear();
     import('@/utils/toastFunction').then((_) =>
       _.default(this.container, this.toast)
     );

@@ -1,5 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { AuthService } from '@/component/services/auth/auth.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +8,7 @@ import { AuthService } from '@/component/services/auth/auth.service';
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  public authService = inject(AuthService);
+  title: string = 'dashboard';
 
   ngOnInit() {}
 }

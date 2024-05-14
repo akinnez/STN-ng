@@ -2,8 +2,8 @@ import { FormControl } from '@angular/forms';
 
 export interface formtype {
   controlName: string;
-  validator: any;
-  value: any;
+  validator?: any;
+  value?: any;
 }
 
 export function form<q>(arr: formtype[]): q {

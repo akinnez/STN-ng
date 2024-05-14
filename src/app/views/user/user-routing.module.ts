@@ -60,9 +60,54 @@ const routes: Routes = [
           import('@/views/user/labels/create/create.component').then(
             (_) => _.CreateComponent
           ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/basic-info/basic-info.component'
+              ).then((_) => _.BasicInfoComponent),
+          },
+          {
+            path: 'package-info',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/package-info/package-info.component'
+              ).then((_) => _.PackageInfoComponent),
+          },
+          {
+            path: 'invoice-info',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/invoice-info/invoice-info.component'
+              ).then((_) => _.InvoiceInfoComponent),
+          },
+          {
+            path: 'export-info',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/export-info/export-info.component'
+              ).then((_) => _.ExportInfoComponent),
+          },
+          {
+            path: 'clear-info',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/clearance-info/clearance-info.component'
+              ).then((_) => _.ClearanceInfoComponent),
+          },
+        ],
+      },
+      {
+        path: 'preview',
+        loadComponent: () =>
+          import('@/views/user/labels/preview/preview.component').then(
+            (_) => _.PreviewComponent
+          ),
       },
     ],
   },
+
   {
     path: 'courier/detection',
     loadComponent: () =>
