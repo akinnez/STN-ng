@@ -72,6 +72,7 @@ export class CreateComponent {
               JSON.stringify(this.createForm.value)
             );
             this.toast.show('Tracking Created Successfully');
+            this.router.navigateByUrl('/user/tracking');
           }
           this.toast.show('Oops, an error was encountered');
         },

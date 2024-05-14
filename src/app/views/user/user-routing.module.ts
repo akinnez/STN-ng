@@ -5,8 +5,8 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () =>
-      import('@/views/user/dashboard/dashboard.component').then(
-        (_) => _.DashboardComponent
+      import('@/views/landing/landing.component').then(
+        (_) => _.LandingComponent
       ),
   },
   {
