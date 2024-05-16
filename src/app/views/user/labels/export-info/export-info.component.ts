@@ -13,9 +13,10 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class ExportInfoComponent {
   private router = inject(Router);
+  payload!: Array<object | any>;
   createData = [
     {
-      label: "Manufacturing Company's Country Code",
+      label: "Company's Country Code",
       formcontrol: 'country_code',
       type: 'text',
     },
@@ -47,17 +48,34 @@ export class ExportInfoComponent {
 
   public createForm = new FormGroup<any>(form(this.log));
 
+  addNew() {
+    if (!this.createForm.valid) {
+      return;
+    }
+    this.createPayload();
+    this.createForm.patchValue({
+      country_code: '',
+      unit_price: '',
+      quantity: '',
+    });
+  }
   submitForm() {
     if (!this.createForm.valid) {
       return;
     }
-    const payload = {
+    this.createPayload();
+    sessionStorage.setItem('export', JSON.stringify(this.payload));
+    this.router.navigateByUrl('/user/label/create/clear-info');
+  }
+
+  createPayload() {
+    const value = {
       country_code: this.createForm.value.country_code,
       unit_price: parseFloat(this.createForm.value.unit_price),
       quantity: parseInt(this.createForm.value.quantity),
     };
+    this.payload.push(value);
 
-    sessionStorage.setItem('export', JSON.stringify(payload));
-    this.router.navigateByUrl('/user/label/create/clear-info');
+    // add toast here
   }
 }

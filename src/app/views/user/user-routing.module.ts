@@ -76,6 +76,13 @@ const routes: Routes = [
               ).then((_) => _.PackageInfoComponent),
           },
           {
+            path: 'sender-reciever',
+            loadComponent: () =>
+              import(
+                '@/views/user/labels/sender-info/sender-info.component'
+              ).then((_) => _.SenderInfoComponent),
+          },
+          {
             path: 'invoice-info',
             loadComponent: () =>
               import(

@@ -5,7 +5,7 @@
     </cite>
   </div>
   <div class="my-6 px-10">
-    <form [formGroup]="createForm" (submit)="submitForm()">
+    <form [formGroup]="createForm">
       <div class="">
         @for(create of createData; track create){
         <div class="mb-3">
@@ -22,9 +22,9 @@
         </div>
         }
       </div>
-      <div class="my-5 flex justify-end">
-        <app-button> Add New Details </app-button>
-        <app-button> Next </app-button>
+      <div class="my-5 flex justify-between md:justify-end md:gap-x-5">
+        <app-button (event)="addNew()"> Add New Details </app-button>
+        <app-button (event)="submitForm()"> Next </app-button>
       </div>
     </form>
   </div>

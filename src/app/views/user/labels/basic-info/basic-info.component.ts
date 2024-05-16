@@ -18,49 +18,22 @@ export class BasicInfoComponent {
   createData = [
     { label: 'Account Id', formcontrol: 'account_id', type: 'text' },
     { label: 'Carrier Id', formcontrol: 'carrier_id', type: 'text' },
-    { label: 'Receiver Name', formcontrol: 'name', type: 'text' },
     {
-      label: 'Receiver Phone Number',
-      formcontrol: 'phone',
-      type: 'number',
-    },
-    { label: 'Receiver Address', formcontrol: 'address1', type: 'text' },
-    { label: 'Receiver State', formcontrol: 'state_province', type: 'text' },
-    {
-      label: 'Receiver Country ISO Code',
-      formcontrol: 'country_code',
-      type: 'text',
-    },
-    { label: 'Reciever City', formcontrol: 'city', type: 'text' },
-    {
-      label: 'Reciever Poster Code',
-      formcontrol: 'poster_code',
-      type: 'number',
-    },
-
-    { label: 'Sender Name', formcontrol: 'sender_name', type: 'text' },
-    {
-      label: 'Sender Phone Number',
-      formcontrol: 'phone1',
-      type: 'number',
-    },
-    { label: 'Sender Address', formcontrol: 'sender_address1', type: 'text' },
-    {
-      label: 'Sender State',
-      formcontrol: 'sender_state_province',
+      label: 'Shipping Service',
+      formcontrol: 'shipping_service',
       type: 'text',
     },
     {
-      label: 'Sender Country ISO Code',
-      formcontrol: 'sender_country_code',
+      label: 'Currency',
+      formcontrol: 'currency',
       type: 'text',
     },
-    { label: 'Sender City', formcontrol: 'sender_city', type: 'text' },
     {
-      label: 'Sender Poster Code',
-      formcontrol: 'sender_poster_code',
-      type: 'number',
+      label: 'Total Actual Weight',
+      formcontrol: 'total_actual_weight',
+      type: 'text',
     },
+    { label: 'Incoterm', formcontrol: 'incoterm', type: 'text' },
   ];
 
   log: Array<formtype> = [
@@ -77,64 +50,22 @@ export class BasicInfoComponent {
     {
       value: '',
       validator: Validators.required,
-      controlName: 'name',
+      controlName: 'incoterm',
     },
     {
       value: '',
       validator: Validators.required,
-      controlName: 'phone',
+      controlName: 'shipping_service',
     },
     {
       value: '',
       validator: Validators.required,
-      controlName: 'address1',
+      controlName: 'currency',
     },
     {
       value: '',
       validator: Validators.required,
-      controlName: 'state_province',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'country_code',
-    },
-    { value: '', validator: Validators.required, controlName: 'city' },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'poster_code',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'sender_name',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'phone1',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'sender_address1',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'sender_state_province',
-    },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'sender_country_code',
-    },
-    { value: '', validator: Validators.required, controlName: 'sender_city' },
-    {
-      value: '',
-      validator: Validators.required,
-      controlName: 'sender_poster_code',
+      controlName: 'total_actual_weight',
     },
   ];
 
@@ -144,28 +75,7 @@ export class BasicInfoComponent {
     if (!this.createForm.valid) {
       return;
     }
-    const payload = {
-      account_id: this.createForm.value.account_id,
-      carrier_id: this.createForm.value.carrier_id,
-
-      ship_to: {
-        name: this.createForm.value.name,
-        phone: this.createForm.value.phone,
-        address: this.createForm.value.address1,
-        state_province: this.createForm.value.state_province,
-        country_code: this.createForm.value.country_code,
-        poster_code: this.createForm.value.poster_code,
-      },
-      ship_from: {
-        name: this.createForm.value.sender_name,
-        phone: this.createForm.value.phone1,
-        address: this.createForm.value.sender_address1,
-        state_province: this.createForm.value.sender_state_province,
-        country_code: this.createForm.value.sender_country_code,
-        poster_code: this.createForm.value.sender_poster_code,
-      },
-    };
-    sessionStorage.setItem('basic', JSON.stringify(payload));
-    this.router.navigateByUrl('/user/label/create/package-info');
+    sessionStorage.setItem('basic', JSON.stringify(this.createForm.value));
+    this.router.navigateByUrl('/user/label/create/sender-reciever');
   }
 }
